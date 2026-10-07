@@ -20,7 +20,7 @@ mvn test
 | Marca, QR y traducción combinables | Decorator | `CertificateRenderer` y decoradores | Subclases por combinación multiplicarían tipos; una opción booleana fija impediría añadir capacidades de forma independiente. |
 | Restringir descargas masivas | Proxy | `BulkDownloadProxy`, `CertificateArchiveService` | La autorización en el cliente o Controller se puede omitir desde otro consumidor; el proxy protege el acceso al servicio costoso. |
 
-El Decorator varía capacidades de un certificado; el Proxy controla el acceso a un servicio; el Facade simplifica una operación coordinada; el Adapter convierte un contrato ajeno. Un Composite tendría sentido para árboles de certificados agrupados, pero no se requiere jerarquía de elementos aquí. Flyweight podría reducir memoria si se almacenaran masivamente estilos compartidos; esta aplicación no mantiene esa carga.
+El Decorator varía capacidades de un certificado; el Proxy controla el acceso a un servicio; el Facade simplifica una operación coordinada; el Adapter convierte un contrato ajeno. La descarga de ejemplo genera un ZIP con un manifiesto por certificado, para concentrar la entrega en el control de acceso y el ensamblado. Un Composite tendría sentido para árboles de certificados agrupados, pero no se requiere jerarquía de elementos aquí. Flyweight podría reducir memoria si se almacenaran masivamente estilos compartidos; esta aplicación no mantiene esa carga.
 
 ## Verificación
 

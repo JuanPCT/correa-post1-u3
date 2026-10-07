@@ -31,7 +31,13 @@ class StructuralPatternsTest {
         var student = new TestingAuthenticationToken("student", "pw", List.of(new SimpleGrantedAuthority("ROLE_ESTUDIANTE")));
         var admin = new TestingAuthenticationToken("admin", "pw", List.of(new SimpleGrantedAuthority("ROLE_ADMIN_CERTIFICADOS")));
         assertThrows(SecurityException.class, () -> proxy.download(List.of("1"), student));
-        assertEquals("1\n2", new String(proxy.download(List.of("1", "2"), admin),
-                java.nio.charset.StandardCharsets.UTF_8));
+        try (var zip = new java.util.zip.ZipInputStream(
+                new java.io.ByteArrayInputStream(proxy.download(List.of("1", "2"), admin)))) {
+            assertEquals("certificado-1.txt", zip.getNextEntry().getName());
+            assertEquals("Identificador del certificado: 1", new String(zip.readAllBytes(), java.nio.charset.StandardCharsets.UTF_8));
+            assertEquals("certificado-2.txt", zip.getNextEntry().getName());
+        } catch (java.io.IOException exception) {
+            fail(exception);
+        }
     }
 }
